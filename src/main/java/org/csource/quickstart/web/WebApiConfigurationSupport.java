@@ -32,13 +32,13 @@ public class WebApiConfigurationSupport extends WebMvcConfigurationSupport{
  
   private ApiInfo apiInfo() { 
       Contact contact = new Contact("SongJian", "https://github.com/devpage", "1422204321@qq.com");
-      ApiInfo apiInfo = new ApiInfo("上传文件服务",//大标题
-              "相关接口",//小标题
-              "1.2.1",//版本
-              org.csource.quickstart.Constants.configure.get("site"),
-              contact,//作者
-              "Apache Licene 2.0",//链接显示文字
-              "http://www.apache.org/licenses/LICENSE-2.0.html"//网站链接
+      ApiInfo apiInfo = new ApiInfo("FastDFS快速入门",
+              "哪里不懂可以联系我",
+              org.csource.quickstart.Constants.configure.get("filecloud.version"),
+              org.csource.quickstart.Constants.configure.get("filecloud.site"),
+              contact,
+              "Apache Licene 2.0",
+              "http://www.apache.org/licenses/LICENSE-2.0.html"
       );
       return apiInfo;
   } 
