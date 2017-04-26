@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        ">
+	<bean id="propertyConfigurer" class="org.csource.quickstart.util.FileCloudPropertyConfigurer">
+		<property name="appPropertiesPrefix" value="filecloud" />
+		<property name="locations">
+			<list>
+				<value>classpath:filecloud/filecloud.properties</value>
+			</list>
+		</property>
+	</bean>
+	<context:component-scan base-package="org.csource.quickstart">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
+	</context:component-scan>
+	<aop:aspectj-autoproxy />
+	<bean class="org.csource.quickstart.util.SpringHelper"></bean>
+	<bean id="fdfsService" name="fdfsService" class="org.csource.quickstart.client.FastDFSService" destroy-method="destroy">
+		<property name="localConfigurePath" value="classpath:filecloud/fdfs_client.conf"></property>
+		<property name="localTempFilePath" value="${filecloud.temp_directory}"></property>
+		<property name="trackerServerPath" value="${filecloud.access-file-site}"></property>
+		<property name="cleanTempSeconds" value="${filecloud.clean_temp_seconds}"></property>
+	</bean>
+	<bean class="org.csource.quickstart.processor.FileProcessFactory" depends-on="fdfsService"></bean>
+</beans> 
